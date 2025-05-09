@@ -1,0 +1,102 @@
+{
+  "info": {
+    "name": "Microservices API Test Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:7001/api/product",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "product"]
+        }
+      }
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test Product\",\n  \"price\": 999\n}"
+        },
+        "url": {
+          "raw": "http://localhost:7001/api/product",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "product"]
+        }
+      }
+    },
+    {
+      "name": "Get All Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:7001/api/user",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "user"]
+        }
+      }
+    },
+    {
+      "name": "Get All Purchases",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:7001/api/purchase",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "purchase"]
+        }
+      }
+    },
+    {
+      "name": "Get Inventory",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:7001/api/inventory",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "inventory"]
+        }
+      }
+    },
+    {
+      "name": "Get Reviews",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:7001/api/review",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "review"]
+        }
+      }
+    }
+  ]
+}
+

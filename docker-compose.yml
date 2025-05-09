@@ -1,0 +1,114 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: productdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    ports:
+      - "4001:4001"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=userdb
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  product-service:
+    build:
+      context: ./product-service
+    container_name: product-service
+    ports:
+      - "4002:4002"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=productdb
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  inventory-service:
+    build:
+      context: ./inventory-service/InventoryMgt1
+    container_name: inventory-service
+    ports:
+      - "8081:8080"
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  purchase-service:
+    build:
+      context: ./purchase-service
+    container_name: purchase-service
+    ports:
+      - "4000:4000"
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  review-service:
+    build:
+      context: ./CustomerReviewservice-main
+    container_name: review-service
+    ports:
+      - "5001:80"
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "5050:80"
+    networks:
+      - ecommerce-network
+    depends_on:
+      - user-service
+      - product-service
+      - purchase-service
+      - review-service
+    restart: unless-stopped
+
+  react-frontend:
+    build:
+      context: ./react-frontend
+    container_name: react-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+networks:
+  ecommerce-network:
+
+volumes:
+  pgdata:
+
